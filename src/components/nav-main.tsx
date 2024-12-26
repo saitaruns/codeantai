@@ -16,7 +16,7 @@ export function NavMain({
         title: string
         url: string
         icon: string
-        isActive?: boolean
+        isDisabled?: boolean
     }[]
 }) {
     const pathname = usePathname();
@@ -25,10 +25,14 @@ export function NavMain({
         <SidebarMenu className="gap-2" >
             {
                 items.map((item) => (
-                    <SidebarMenuItem key={item.title} >
-                        <SidebarMenuButton asChild isActive={pathname === item.url} className={cn("cursor-pointer", {
-                            "!text-[#414651] hover:bg-transparent active:bg-transparent": !item.isActive,
-                        })} >
+                    <SidebarMenuItem key={item.title}
+                        title={item.isDisabled ? "Coming Soon" : ""}
+                    >
+                        <SidebarMenuButton asChild isActive={pathname === item.url}
+                            disabled={item.isDisabled}
+                            className={cn("cursor-pointer", {
+                                "text-gray-400 hover:bg-transparent active:bg-transparent": item.isDisabled
+                            })} >
                             <div className="flex items-center gap-2">
                                 <Image src={item.icon} alt={item.title} width={16} height={16} />
                                 <span>{item.title} </span>

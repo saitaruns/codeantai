@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Database, Plus, RefreshCcw, Search } from "lucide-react";
+import { ArrowDown, Database, Plus, RefreshCcw, Search } from "lucide-react";
 import { useUser } from "@/components/context/UserContext";
 import { formatDistanceToNow } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -33,15 +33,16 @@ const fetchRepos = async (user: string) => {
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
   const { user } = useUser();
   const { data: repos = [], isFetching, refetch } = useQuery<Repo[]>({
     queryKey: ["repos", user],
     queryFn: () => fetchRepos(user),
   });
 
-
   useEffect(() => {
     setSearchQuery("");
+    setIsScrolledToBottom(false);
     refetch();
   }, [user, refetch]);
 
@@ -52,6 +53,25 @@ export default function Home() {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    if (!isScrolledToBottom) {
+      setIsScrolledToBottom(container.scrollTop + container.clientHeight >= container.scrollHeight);
+    }
+  };
+
+  const handleChange = () => {
+    const container = document.querySelector('.flex-col.divide-y');
+    if (container) {
+      if (!isScrolledToBottom) {
+        container.scrollBy({
+          top: container.scrollHeight / 2,
+          behavior: 'smooth',
+        });
+      }
+    }
+  }
 
   const filteredRepos = repos.filter(repo =>
     repo.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -69,11 +89,8 @@ export default function Home() {
   return (
     <div className="p-0 md:p-6 bg-[#FAFAFA]">
       <div className="prose max-w-none bg-white [&_*]:my-0 border w-full sm:rounded-lg flex flex-col">
-        <div className="gap-2 p-3 flex md:hidden border-b justify-between">
-          <div className="flex items-center justify-center gap-2">
-            <Image src="/logo.svg" alt="CodeAnt AI" width={24} height={24} />
-            <h3 className="font-normal">CodeAnt AI </h3>
-          </div>
+        <div className="gap-2 px-3 py-1 flex md:hidden border-b justify-between">
+          <Image src="/logo_w_text.svg" alt="CodeAnt AI" width={100} height={100} />
           <SidebarTrigger />
         </div>
         <div className="flex flex-col lg:flex-row p-3 md:p-6 gap-2 justify-between w-full border-b">
@@ -110,7 +127,7 @@ export default function Home() {
             </AddRepoDialog>
           </div>
         </div>
-        <div className="flex flex-col divide-y h-[calc(100vh-200px)] sm:h-[calc(100vh-230px)] lg:h-[calc(100vh-190px)] overflow-auto">
+        <div className="flex flex-col divide-y h-[calc(100vh-185px)] sm:h-[calc(100vh-200px)] md:h-[calc(100vh-230px)] lg:h-[calc(100vh-190px)] overflow-auto" onScroll={handleScroll}>
           {isFetching ? Array.from({ length: 10 }).map((_, index) => (
             <div
               key={index}
@@ -136,6 +153,16 @@ export default function Home() {
               <Tile key={index} {...item} />
             ))}
         </div>
+        {
+          !isScrolledToBottom ? (<div className="flex justify-center absolute self-center bottom-5 sm:bottom-10">
+            <button
+              onClick={handleChange}
+              className="p-2 rounded-full bg-gray-200 hover:bg-gray-300"
+            >
+              <ArrowDown />
+            </button>
+          </div>) : null
+        }
       </div>
     </div>
   );

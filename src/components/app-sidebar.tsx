@@ -35,31 +35,31 @@ const data = {
             title: "Repositories",
             url: "/",
             icon: '/sidebar/home.svg',
-            isActive: true,
+            isDisabled: false,
         },
         {
             title: "AI Code Review",
             url: "#",
             icon: '/sidebar/code.svg',
-            isActive: false,
+            isDisabled: true,
         },
         {
             title: "Cloud Security",
             url: "#",
             icon: '/sidebar/cloud.svg',
-            isActive: false,
+            isDisabled: true,
         },
         {
             title: "How to Use",
             url: "#",
             icon: '/sidebar/book.svg',
-            isActive: false,
+            isDisabled: true,
         },
         {
             title: "Settings",
             url: "#",
             icon: '/sidebar/gear.svg',
-            isActive: false,
+            isDisabled: true,
         }
     ],
 }
@@ -77,16 +77,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <Sidebar {...props} >
-            <SidebarHeader className="prose max-w-none [&_*]:my-0 px-4 flex flex-row items-center justify-between" >
+            <SidebarHeader className="prose max-w-none [&_*]:my-0 px-4 flex flex-row items-center justify-between mt-2 md:mt-4" >
                 <Link
                     href={`/`}
-                    className="flex items-center justify-center gap-2 no-underline">
-                    <Image src="/logo.svg" alt="CodeAnt AI" width={24} height={24} />
-                    <h3 className="font-normal !mt-1">CodeAnt AI </h3>
+                    className="no-underline">
+                    <Image src="/logo_w_text.svg" alt="CodeAnt AI" width={150} height={150} />
                 </Link>
                 <X
                     onClick={toggleSidebar}
-                    className="cursor-pointer block sm:hidden" />
+                    className="cursor-pointer block md:hidden" />
             </SidebarHeader>
             <SidebarContent className="px-3 pt-2" >
                 <Select

@@ -28,7 +28,7 @@ export function LoginForm({
         text: "Sign in with GitLab",
       },
     ],
-    self: [
+    self_hosted: [
       {
         icon: '/socials/gitlab.svg',
         text: "Sign in with GitLab",
@@ -44,18 +44,26 @@ export function LoginForm({
     <form className={cn("flex flex-col gap-6 prose lg:prose-xl max-w-none bg-white", className)} {...props}>
       <div className="grid gap-6 border rounded-xl" >
         <div className="space-y-4 text-center pt-5" >
-          <Link href={`/`} className="flex items-center justify-center gap-2 no-underline" >
-            <Image src="/logo.svg" alt="CodeAnt AI" width={24} height={24} />
-            <h5 className="font-normal !mt-1" > CodeAnt AI </h5>
+          <Link href={`/`} className="no-underline flex justify-center" >
+            <Image src="/logo_w_text.svg" alt="CodeAnt AI" width={200} height={200} />
           </Link>
           <h3> Welcome to CodeAnt AI </h3>
         </div>
         <Tabs defaultValue="saas" className="w-full h-[350px] space-y-4">
           <div className="border-b p-8 pt-0">
             <TabsList className="w-full h-12">
-              {["saas", "self"].map((type) => (
-                <TabsTrigger key={type} className="size-full font-semibold" value={type}>
-                  {type.toUpperCase()}
+              {[{
+                text: "SAAS",
+                value: "saas"
+              }, {
+                text: "Self Hosted",
+                value: "self_hosted"
+              }].map(({
+                text,
+                value
+              }) => (
+                <TabsTrigger key={value} className="size-full font-semibold" value={value}>
+                  {text}
                 </TabsTrigger>
               ))}
             </TabsList>
