@@ -80,10 +80,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarHeader className="prose max-w-none [&_*]:my-0 px-4 flex flex-row items-center justify-between mt-2 md:mt-4" >
                 <Link
                     href={`/`}
-                    className="no-underline">
+                    className="no-underline" >
                     <Image src="/logo_w_text.svg" alt="CodeAnt AI" width={150} height={150} />
                 </Link>
-                <X
+                < X
                     onClick={toggleSidebar}
                     className="cursor-pointer block md:hidden" />
             </SidebarHeader>
@@ -113,19 +113,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         }
                     </SelectContent>
                 </Select>
-                <NavMain items={data.navMain} />
+                < NavMain items={data.navMain} />
             </SidebarContent>
-            <SidebarFooter className="mb-2">
+            < SidebarFooter className="mb-2" >
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton className="cursor-pointer flex items-center gap-2" >
+                        <SidebarMenuButton className="cursor-pointer flex items-center gap-2  text-gray-400 hover:bg-transparent active:bg-transparent" >
                             <Phone />
-                            <span>Support</span>
+                            <span> Support </span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                         <Link href={`/login`} className="no-underline" >
-                            <SidebarMenuButton className="cursor-pointer flex items-center gap-2">
+                            <SidebarMenuButton className="cursor-pointer flex items-center gap-2" >
                                 <LogOut className="size-4" />
                                 <span>
                                     Logout
