@@ -22,29 +22,30 @@ export function NavMain({
     const pathname = usePathname();
 
     return (
-        <SidebarMenu className= "gap-2" >
-        {
-            items.map((item) => (
-                <SidebarMenuItem key= { item.title }
-                        title = { item.isDisabled ? "Coming Soon" : "" }
-                >
-                <SidebarMenuButton asChild isActive = { pathname === item.url}
-    disabled = { item.isDisabled }
-    className = {
-        cn("cursor-pointer", {
-            "text-gray-400 hover:bg-transparent active:bg-transparent": item.isDisabled
-    })
-} >
-    <div className="flex items-center gap-2" >
-        <Image src={ item.icon }
-style = {{ filter: pathname === item.url ? 'invert(100%)' : 'none' }}
-alt = { item.title } width = { 16} height = { 16} />
-    <span>{ item.title } </span>
-    </div>
-    </SidebarMenuButton>
-    </SidebarMenuItem>
+        <SidebarMenu >
+            {
+                items.map((item) => (
+                    <SidebarMenuItem key={item.title}
+                        title={item.isDisabled ? "Coming Soon" : ""}
+                    >
+                        <SidebarMenuButton isActive={pathname === item.url}
+                            disabled={item.isDisabled}
+                            className={
+                                cn("cursor-pointer flex items-center gap-2", {
+                                    "text-gray-400 hover:bg-transparent active:bg-transparent": item.isDisabled
+                                })
+                            } >
+                            <Image src={item.icon}
+                                style={{ filter: pathname === item.url ? 'invert(100%)' : 'none' }}
+                                alt={item.title}
+                                width={16}
+                                height={16}
+                            />
+                            <span>{item.title} </span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
                 ))
             }
-</SidebarMenu>
+        </SidebarMenu>
     )
 }

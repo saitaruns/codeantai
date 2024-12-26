@@ -12,6 +12,7 @@ import {
     SidebarMenuButton,
     SidebarRail,
     useSidebar,
+    SidebarGroup,
 } from "@/components/ui/sidebar"
 import { NavMain } from "./nav-main"
 import {
@@ -76,51 +77,61 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { toggleSidebar } = useSidebar();
 
     return (
-        <Sidebar {...props} >
-            <SidebarHeader className="prose max-w-none [&_*]:my-0 px-4 flex flex-row items-center justify-between mt-2 md:mt-4" >
+        <Sidebar collapsible="icon" {...props} >
+            <SidebarHeader className="px-4 flex flex-row items-center justify-between mt-2 md:mt-4" >
                 <Link
                     href={`/`}
-                    className="no-underline" >
+                    className="no-underline group-data-[collapsible=icon]:hidden" >
                     <Image src="/logo_w_text.svg" alt="CodeAnt AI" width={150} height={150} />
                 </Link>
-                < X
+                <Link
+                    href={`/`}
+                    className="no-underline hidden group-data-[collapsible=icon]:flex" >
+                    <Image src="/logo.svg" alt="CodeAnt AI"
+                        width={20} height={20} />
+                </Link>
+                <X
                     onClick={toggleSidebar}
                     className="cursor-pointer block md:hidden" />
             </SidebarHeader>
-            <SidebarContent className="px-3 pt-2" >
-                <Select
-                    value={user}
-                    onValueChange={
-                        (value) => {
-                            setUser(value)
-                            if (isMobile) {
-                                toggleSidebar();
+            <SidebarContent className="px-2 pt-2" >
+                <SidebarGroup className="group-data-[collapsible=icon]:hidden p-0">
+                    <Select
+                        value={user}
+                        onValueChange={
+                            (value) => {
+                                setUser(value)
+                                if (isMobile) {
+                                    toggleSidebar();
+                                }
                             }
                         }
-                    } defaultValue="saitaruns" >
-                    <SelectTrigger className="w-full" >
-                        <SelectValue placeholder="Select User" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {
-                            users.map((user) => (
-                                <SelectItem
-                                    className="cursor-pointer"
-                                    key={user} value={user} >
-                                    {user}
-                                </SelectItem>
-                            ))
-                        }
-                    </SelectContent>
-                </Select>
-                < NavMain items={data.navMain} />
+                        defaultValue="saitaruns"
+                    >
+                        <SelectTrigger className="w-full" >
+                            <SelectValue placeholder="Select User" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {
+                                users.map((user) => (
+                                    <SelectItem
+                                        className="cursor-pointer"
+                                        key={user} value={user} >
+                                        {user}
+                                    </SelectItem>
+                                ))
+                            }
+                        </SelectContent>
+                    </Select>
+                </SidebarGroup>
+                <NavMain items={data.navMain} />
             </SidebarContent>
-            < SidebarFooter className="mb-2" >
+            <SidebarFooter className="mb-2" >
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton className="cursor-pointer flex items-center gap-2  text-gray-400 hover:bg-transparent active:bg-transparent" >
                             <Phone />
-                            <span> Support </span>
+                            <span>Support </span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>

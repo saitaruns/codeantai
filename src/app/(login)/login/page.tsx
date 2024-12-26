@@ -20,7 +20,7 @@ export default function LoginPage() {
       <div
         className="relative hidden lg:flex justify-center"
         style={{
-          backgroundImage: "url(/logo.svg)",
+          backgroundImage: "url(/logo_login.svg)",
           backgroundPosition: "bottom left",
           backgroundSize: "300px",
           backgroundRepeat: "no-repeat",
